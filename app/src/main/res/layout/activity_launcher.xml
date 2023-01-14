@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:maxads="http://schemas.applovin.com/android/1.0"
-    android:id="@+id/drawerLayout"
+    android:id="@+id/dl"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -16,24 +16,50 @@
 
 
 
-        <androidx.appcompat.widget.Toolbar
+        <LinearLayout
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/red"
+            android:layout_height="60dp"
+            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="60dp"
+                android:background="@drawable/toolbar_conners">
+
+                <ImageView
+                    android:id="@+id/img_drawer_controller"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:elevation="2dp"
+                    app:srcCompat="@drawable/ic_baseline_menu_24"
+                    app:tint="@color/white"/>
+
+            </LinearLayout>
+
+
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/tvHeader"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:text="@string/app_name"
-                android:textColor="@color/white"
-                android:textSize="25dp"
-                android:textStyle="bold"/>
+                android:textSize="22dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/primary"
+                android:layout_height="wrap_content"/>
 
-        </androidx.appcompat.widget.Toolbar>
+        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -66,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/primary"
-                        android:text="Start Game"
+                        android:text="Get Start"
                         android:layout_gravity="center"
                         android:textStyle="bold"
                         android:textSize="25dp"/>
@@ -203,7 +229,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation_view"
+        android:id="@+id/navLeft"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:menu="@menu/nav_left"

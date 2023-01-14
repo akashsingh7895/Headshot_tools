@@ -10,6 +10,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -47,7 +48,7 @@ public class LauncherActivity extends AppCompatActivity implements MaxAdListener
         interstitialAd.loadAd();
 
 
-        drawerIcon();
+        Drawer();
 
         binding.startgaem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,91 +99,88 @@ public class LauncherActivity extends AppCompatActivity implements MaxAdListener
             }
         });
     }
-    public void drawerIcon(){
-        toggle = new ActionBarDrawerToggle(this,binding.drawerLayout,binding.toolbar,R.string.drawerOpen,R.string.drawerClose);
+    private void Drawer(){
+        this.binding.navLeft.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
-
-        binding. drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        binding.navigationView.setItemIconTintList(null);
-
-        binding.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            MenuItem menuItem;
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                menuItem = item;
+//                if (R.id.updateApp == menuItem.getItemId()) {
+//                    binding.dl.closeDrawers();
+//                    Uri uri = Uri.parse("market://details?id=" + getPackageName());
+//                    Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+//                    try {
+//                        startActivity(myAppLinkToMarket);
+//                    } catch (ActivityNotFoundException e) {
+//                        Toast.makeText(MainActivity.this, ""+R.string.str_unable_to_find_market, Toast.LENGTH_LONG).show();
+//                    }
+//                }
 
 
-                binding.drawerLayout.closeDrawer(GravityCompat.START);
-                binding.drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-                    @Override
-                    public void onDrawerClosed(View drawerView) {
-                        super.onDrawerClosed(drawerView);
-
-                        switch (menuItem.getItemId()) {
-
-                            case R.id.share:
-
-                                try {
-                                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                                    shareIntent.setType("text/plain");
-                                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                                    String shareMessage= "";
-                                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id="+getPackageName();
-                                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                                    startActivity(Intent.createChooser(shareIntent, "choose one"));
-                                } catch(Exception e) {
-                                    //e.toString();
-                                }
-
-                                break;
-
-                            case R.id.rates:
-
-                                try{
-                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+getPackageName())));
-                                }
-                                catch (ActivityNotFoundException e){
-                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+getPackageName())));
-                                }
-
-                                break;
 
 
-                            case R.id.PrivacyPolicy:
+                switch (menuItem.getItemId()) {
 
-                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.privacy_policy)));
-                                startActivity(browserIntent);
-                                break;
+                    case R.id.share:
 
-                            case R.id.contact:
-
-                                Intent i = new Intent(Intent.ACTION_SEND);
-                                i.setType("message/rfc822");
-                                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{getString(R.string.supported_email)});
-                                i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
-                                i.putExtra(Intent.EXTRA_TEXT   , "body of email");
-                                try {
-                                    startActivity(Intent.createChooser(i, "Send mail..."));
-                                } catch (android.content.ActivityNotFoundException ex) {
-                                    Toast.makeText(LauncherActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-                                }
-
-                                break;
-
-
+                        try {
+                            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                            shareIntent.setType("text/plain");
+                            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                            String shareMessage= "";
+                            shareMessage = shareMessage + "https://play.google.com/store/apps/details?id="+getPackageName();
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                            startActivity(Intent.createChooser(shareIntent, "choose one"));
+                        } catch(Exception e) {
+                            //e.toString();
                         }
-                        binding.drawerLayout.removeDrawerListener(this);
+
+                        break;
+
+                    case R.id.rates:
+
+                        try{
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+getPackageName())));
+                        }
+                        catch (ActivityNotFoundException e){
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+getPackageName())));
+                        }
+
+                        break;
 
 
-                    }
-                });
+                    case R.id.PrivacyPolicy:
+
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.privacy_policy)));
+                        startActivity(browserIntent);
+                        break;
+
+                    case R.id.contact:
+
+                        Intent i = new Intent(Intent.ACTION_SEND);
+                        i.setType("message/rfc822");
+                        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{getString(R.string.supported_email)});
+                        i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
+                        i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+                        try {
+                            startActivity(Intent.createChooser(i, "Send mail..."));
+                        } catch (android.content.ActivityNotFoundException ex) {
+                            Toast.makeText(LauncherActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        break;
+
+
+                }
+
+
+
+
 
                 return true;
+            }
+        });
+        this.binding.imgDrawerController.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                LauncherActivity.this.binding.dl.openDrawer(Gravity.LEFT);
             }
         });
     }
